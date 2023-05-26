@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable max-classes-per-file */
-import '@testing-library/jest-dom'
 
 enum Orientation {
   NORTH = 0,
@@ -20,12 +19,12 @@ class Coordinates {
   }
 }
 
-class MarsRover {
+class Rover {
   coordinates = new Coordinates(0, 0)
 
   orientation = Orientation.NORTH
 
-  stepMatrix = [
+  STEP_MATRIX = [
     [0, 1, 0, -1],
     [1, 0, -1, 0],
     [0, -1, 0, 1],
@@ -47,20 +46,20 @@ class MarsRover {
 
       this.coordinates.xy.forEach((_val, axis) => {
         const newInstructionIndex = (instructionIndex + axis) % this.orientations.length
-        this.coordinates.xy[axis] += this.stepMatrix[newInstructionIndex]![orientationIndex]!
+        this.coordinates.xy[axis] += this.STEP_MATRIX[newInstructionIndex]![orientationIndex]!
       })
 
       const newOrientationIndex =
-        (this.orientations.length + orientationIndex + this.stepMatrix[0]![instructionIndex]!) %
+        (this.orientations.length + orientationIndex + this.STEP_MATRIX[0]![instructionIndex]!) %
         this.orientations.length
       this.orientation = this.orientations[newOrientationIndex]!
     })
   }
 }
 
-let marsRover: MarsRover
+let marsRover: Rover
 beforeEach(() => {
-  marsRover = new MarsRover()
+  marsRover = new Rover()
 })
 describe('A new Mars Rover', () => {
   it('is initially at the origin', () => {
